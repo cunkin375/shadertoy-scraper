@@ -39,6 +39,7 @@ def extract_shader_code(url: str) -> str:
     print(f"Loading {url} ...")
     with SB(uc=True, headless=False) as sb:
         sb.goto(url)
+        sb.uc_gui_handle_captcha()
         sb.wait_for_element(".CodeMirror", timeout=30)
         code = sb.execute_script("return document.querySelector('.CodeMirror').CodeMirror.getValue();")
         return code
@@ -121,6 +122,7 @@ if __name__ == "__main__":
         shader_id = url.rstrip('/').split('/')[-1]
         try:
             code = extract_shader_code(url)
+            print(code)
             if code:
                 out_path = os.path.join(args.outdir, f"{shader_id}.gif")
                 render_shader_to_gif(code, out_path)
