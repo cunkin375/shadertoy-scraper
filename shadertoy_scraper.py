@@ -39,9 +39,7 @@ def extract_shader_code(url: str) -> str:
     print(f"Loading {url} ...")
     with SB(uc=True, headless=False) as sb:
         sb.goto(url)
-        # Wait for the CodeMirror editor to be present
         sb.wait_for_element(".CodeMirror", timeout=30)
-        # Extract the code
         code = sb.execute_script("return document.querySelector('.CodeMirror').CodeMirror.getValue();")
         return code
 
